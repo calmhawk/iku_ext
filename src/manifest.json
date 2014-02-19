@@ -1,0 +1,56 @@
+{
+    // 必须的字段
+    "name": "iku_video",
+    "version": "0.1",
+    "manifest_version": 2,
+    // 建议提供的字段
+    "description": "extension for playing video of youku.com in youkuclient",
+    "icons": {"128":"128.png", "64":"64.png"},
+    // "homepage_url": "http://path/to/homepage",
+    "permissions": [
+        "tabs",
+        "http://*.youku.com/"
+    ],
+    //"background": {
+    //    "scripts": ["bg.js"],
+    //    "persistent": false
+    //},
+    "content_scripts": [
+        {
+            "matches": ["http://*.youku.com/*"],
+            //"css": ["mystyles.css"],
+            "js": ["jquery.js", "scripts.js"]
+        }
+    ]
+    //"browser_action": {
+    //    "default_icon": "19.png", 
+    //    "default_title": "iku_video"      
+    //    //"default_popup": "popup.html"        
+    //}
+    //"page_action": {
+    //    "default_icon": "19.png", 
+    //    "default_title": "iku_video"      
+    //    //"default_popup": "popup.html"        
+    //}
+    // "page_action": {...},
+    // "default_locale": "zh",
+    // "theme": {...},
+    // "app": {...},
+    // 根据需要提供
+    // "chrome_url_overrides": {...},
+    // "content_security_policy": "policyString",
+    // "file_browser_handlers": [...],
+    // "incognito": "spanning" or "split",
+    // "intents": {...}
+    // "key": "publicKey",
+    // "minimum_chrome_version": "versionString",
+    // "nacl_modules": [...],
+    // "offline_enabled": true,
+    // "omnibox": { "keyword": "aString" },
+    // "options_page": "aFile.html",
+    // "plugins": [...],
+    // "requirements": {...},
+    // "update_url": "http://path/to/updateInfo.xml",
+    // "web_accessible_resources": [...]
+}  
+
