@@ -9,7 +9,10 @@
     // "homepage_url": "http://path/to/homepage",
     "permissions": [
         "tabs",
-        "http://*.youku.com/"
+        "storage",
+        "http://*.youku.com/",
+        "http://weibo.com/",
+        "http://*.weibo.com/"
     ],
     //"background": {
     //    "scripts": ["bg.js"],
@@ -17,7 +20,10 @@
     //},
     "content_scripts": [
         {
-            "matches": ["http://*.youku.com/*"],
+            "run_at": "document_end",
+            "matches": [
+                "http://*.youku.com/*",
+                "http://weibo.com/*"],
             //"css": ["mystyles.css"],
             "js": ["jquery.js", "scripts.js"]
         }
