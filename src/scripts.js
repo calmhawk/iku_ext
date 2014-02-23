@@ -14,7 +14,7 @@
     function injectYouku(){
         if($("#fn_favorite").length > 0){
             var m = window.location.href.match(/.*id_(.*)\.html.*/);
-            if(m.length > 1){
+            if(m && m.length > 1){
                 var href = "iku://|play|popwnd|url|bak|"+"http://v.youku.com/v_show/id_"+m[1]+".html|";
                 var inject_html = ' \
                     <div class="fn" id="fn_play_iku"> \
@@ -30,8 +30,8 @@
     function injectWeibo(){
         document.addEventListener('DOMNodeInserted', function (event){
             node = event.target;
-            if(!node.tagName || node.tagName.toUpperCase() !== "DIV") return;
-            if(node.classList.contains('WB_feed_spec')){
+            if(!node.nodeName || node.nodeName.toUpperCase() !== "DIV") return;
+            if(node.classList.contains('WB_feed_type')){
                 injectWeiboJs();
             }
         }, false);
@@ -44,26 +44,22 @@
     }
 
     function injectWeiboJs(){
-        alert($(".WB_feed_spec").length);
         if($(".WB_feed_spec").length > 0){
             $(".WB_feed_spec").each(function(i,d){
                 action_data = $(d).attr("action-data");
-                alert(action_data);
-                if(action_data && action_data.match(/.*v\.youku\.com.*/)){
-                    alert(action_data);
+                if(action_data){
+                    var m = action_data.match(/.*v\.youku\.com.*id_(.*)\.html.*/);
+                    if(m && m.length > 1){
+                        var ele = $(d).find('.W_fr');
+                        var play_ele = $(d).find('a[name=iku_play]');
+                        if(play_ele.length === 0 && ele.length >= 1){
+                            var href = "iku://|play|popwnd|url|bak|"+"http://v.youku.com/v_show/id_"+m[1]+".html|";
+                            var inject_html = '<a class="W_btn_a" name="iku_play" href="' + href + '"><span class="btn_26px">iku播放</span></a>'
+                            $(ele).prepend(inject_html);
+                        }
+                    }
                 }
             });
-            //if(m.length > 1){
-            //    var m = href.match(/.*id_(.*)\.html.*/);
-            //    var href = "iku://|play|popwnd|url|bak|"+"http://v.youku.com/v_show/id_"+m[1]+".html|";
-            //    var inject = ' \
-            //        <div class="fn" id="fn_play_iku"> \
-            //            <div class="handle" ><a id="fn_play_iku_a" href="' + href + '">播放</a></div> \
-            //        </div> \
-            //    ';
-            //    $("#fn_favorite").after(inject);
-            //    injectJs(m[1]);
-            //}
         }
     }
 
