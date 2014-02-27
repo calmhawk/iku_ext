@@ -10,9 +10,8 @@
     "permissions": [
         "tabs",
         "storage",
-        "http://*.youku.com/",
-        "http://weibo.com/",
-        "http://*.weibo.com/"
+        "http://*/*",
+        "https://*/*"
     ],
     //"background": {
     //    "scripts": ["bg.js"],
@@ -23,7 +22,7 @@
             "run_at": "document_end",
             "matches": [
                 "http://*.youku.com/*",
-                "http://weibo.com/*"],
+                "http://*.weibo.com/*"],
             //"css": ["mystyles.css"],
             "js": ["jquery.js", "scripts.js"]
         }
