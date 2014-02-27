@@ -11,5 +11,5 @@ please install youkuclient first.
 
 update history
 ---------------------
-*2014-02-27 support weibo text block.
-*2014-02-26 support v.youku.com, weibo spec block.
+* 2014-02-27 support weibo text block.
+* 2014-02-26 support v.youku.com, weibo spec block.
