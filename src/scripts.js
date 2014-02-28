@@ -84,13 +84,17 @@
         document.addEventListener('DOMNodeInserted', function (event){
             node = event.target;
             if(!node.nodeName || node.nodeName.toUpperCase() !== 'DIV') return;
-            if(node.classList.contains('WB_feed_type')){
-                // refresh events 
-                injectWeiboJs(node);
-            }else if(node.classList.contains('WB_feed')){
-                // first loading events
-                injectWeiboJs(node);
-            }
+            injectWeiboJs(node);
+            //if(node.classList.contains('WB_feed_type')){
+            //    // refresh events 
+            //    injectWeiboJs(node);
+            //}else if(node.classList.contains('WB_feed')){
+            //    // first loading events
+            //    injectWeiboJs(node);
+            //}else{
+            //    // try always
+            //    injectWeiboJs(node);
+            //}
         }, false);
     }
 
