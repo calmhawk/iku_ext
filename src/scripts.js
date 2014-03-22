@@ -22,6 +22,14 @@
             injectVPageJs();
         }else{
             injectMainPageJs();
+            document.addEventListener('DOMNodeInserted', function (event){
+                node = event.target;
+                if(!node.nodeName || node.nodeName.toUpperCase() !== 'DIV') return;
+                var vblocks = $(node).find('.v-meta.va');
+                vblocks.each(function(i, d){
+                    injectVBlockJs(vblocks);
+                });
+            }, false);
         }
     }
 
@@ -31,11 +39,11 @@
             // add a play button beside the favorite button
             /*jshint multistr: true */
             var inject_html = ' \
-                <div class="fn" id="fn_play_iku"> \
-                    <div class="handle" ><a id="fn_play_iku_a" href="' + _genInjectUrl(m[1]) + '">iKu</a></div> \
-                </div> \
+                <div class="fn-collect"><div class="fn" id="fn_play_iku"> \
+                    <div id="fn_play_iku_div" style="margin-top:5px"><a id="fn_play_iku_a" href="' + _genInjectUrl(m[1]) + '"><span class="ico"><i class="ico-pc"></i></span><span class="label">iKu</span></a></div> \
+                </div></div> \
             ';
-            $('#fn_favorite').after(inject_html);
+            $('.fn-collect').after(inject_html);
 
             // inject js at the end of body block
             // TODO add whole swf adapter process
@@ -58,29 +66,34 @@
                 });
             });
             $('.v-meta.va').each(function(i, d){
-                var a = $(d).parent().find('.v-link').find('a');
-                var ele = $(d).find('.ico-statplay');
-                if(a.length > 0 && ele.length > 0){
-                    var mm = a[0].href.match(/.*id_(.*)\.html.*/);
-                    if(mm && mm.length > 1){
-                        var inject_html = '<a href="' + _genInjectUrl(mm[1]) + '" class="v-username"><i class="ico-statplay"></i>iKu</a>';
-                        var TOTAL_DIV_WIDTH = 180; // 190 - 5 * 2(padding)
-                        var INJECT_ELE_WIDTH = 34; 
-                        var existing_ele_width = 0;
-                        $(ele[0]).parent().children().each(function(i, d){
-                            existing_ele_width += $(d).width();
-                        });
-                        if(TOTAL_DIV_WIDTH - existing_ele_width >= INJECT_ELE_WIDTH)
-                            $(ele[0]).parent().append(inject_html);
-                    }
-                }
+                injectVBlockJs(d)
             });
+        }
+    }
+
+    function injectVBlockJs(d){
+        var a = $(d).parent().find('.v-link').find('a');
+        var ele = $(d).find('.ico-statplay');
+        if(a.length > 0 && ele.length > 0){
+            var mm = a[0].href.match(/.*id_(.*)\.html.*/);
+            if(mm && mm.length > 1){
+                var inject_html = '<a href="' + _genInjectUrl(mm[1]) + '" class="v-username"><i class="ico-statplay"></i>iKu</a>';
+                var TOTAL_DIV_WIDTH = 180; // 190 - 5 * 2(padding)
+                var INJECT_ELE_WIDTH = 34; 
+                var existing_ele_width = 0;
+                $(ele[0]).parent().children().each(function(ii, dd){
+                    existing_ele_width += $(dd).width();
+                });
+                if(TOTAL_DIV_WIDTH - existing_ele_width >= INJECT_ELE_WIDTH)
+                    $(ele[0]).parent().append(inject_html);
+            }
         }
     }
     // end of youku site inject
 
     // start of weibo site inject
     function injectWeibo(){
+        injectWeiboJs($('body'));
         document.addEventListener('DOMNodeInserted', function (event){
             node = event.target;
             if(!node.nodeName || node.nodeName.toUpperCase() !== 'DIV') return;
